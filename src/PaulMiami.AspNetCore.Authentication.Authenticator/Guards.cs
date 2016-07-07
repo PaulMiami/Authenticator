@@ -21,6 +21,12 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator
                 throw new ArgumentNullException(name);
         }
 
+        public static void CheckArgumentNullOrEmpty(this Array a, string name)
+        {
+            if (a == null || a.Length == 0)
+                throw new ArgumentNullException(name);
+        }
+
         public static void CheckMandatoryOption(this string s, string name)
         {
             if (string.IsNullOrEmpty(s))

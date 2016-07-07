@@ -36,6 +36,7 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator.Test
         [InlineData("MZXW6YTBOI======", "foobar")]
         public void MoreTest(string expected, string actual)
         {
+            //https://tools.ietf.org/html/rfc4648#section-10
             Assert.Equal(expected, Base32Encoding.Encode(Encoding.UTF8.GetBytes(actual)));
         }
     }

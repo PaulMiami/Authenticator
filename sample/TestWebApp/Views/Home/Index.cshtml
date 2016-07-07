@@ -1,0 +1,70 @@
+﻿@model TestWebApp.Models.Home.IndexViewModel
+
+<div class="row">
+    <div class="col-md-8">
+        <section>
+            <form asp-controller="Home" asp-action="Index" method="post" class="form-horizontal">
+                <h4>Change secret</h4>
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Secret" class="col-md-2 control-label"></label>
+                    <div class="col-md-10">
+                        <input asp-for="Secret" class="form-control" />
+                        <span asp-validation-for="Secret" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <button type="submit" class="btn btn-default">Change secret</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+    <div class="col-md-4">
+        <section>
+            <h4>Scan the qr code with your favorite authenticator app</h4>
+            <div id="qrcode"></div>
+            <div class="row">
+                <div id="validationCode" class="text-center col-md-2" style="font-weight: bold"></div>
+                <div id="timeRemaining" class="text-center col-md-2" style="color: green; font-weight: bold"></div>
+            </div>
+        </section>
+    </div>
+            
+    </div>
+    @section Scripts{
+        <script src="~/lib/qrcode-js/qrcode.js"></script>
+        <script src="~/lib/moment/min/moment.min.js"></script>
+        <script type="text/javascript">
+            var qrcode = new QRCode(document.getElementById("qrcode"), {
+                text: "@Html.Raw(Model.AuthenticatorUri)",
+                width: 128,
+                height: 128,
+                colorDark: "#000000",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+
+            var refreshCode = function () {
+                $.ajax("/api/authenticator?secret=@Model.Secret")
+                    .done(function (data) {
+                        $("#validationCode").html(data);
+                        window.setTimeout(refreshCode, remainingTime() * 1000);
+                    });
+            };
+
+            var remainingTime = function () {
+                return (30 - (moment().seconds() % 30));
+            }
+
+            var refreshTimer = function () {
+                $("#timeRemaining").html(remainingTime());
+            };
+
+            refreshCode();
+
+            window.setInterval(refreshTimer, 1000);
+
+        </script>
+    }
