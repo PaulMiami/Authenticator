@@ -50,10 +50,10 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator.Test
         }
 
         [Theory]
-        [InlineData(HashAlgorithm.SHA1, 10, 5)]
-        [InlineData(HashAlgorithm.SHA256, 20, 8)]
-        [InlineData(HashAlgorithm.SHA512, 35, 9)]
-        public void GetUriSuccess(HashAlgorithm hashAlgorithm, int period, int digits)
+        [InlineData(HashAlgorithm.SHA1, 30, 6)]
+        [InlineData(HashAlgorithm.SHA256, 60, 8)]
+        [InlineData(HashAlgorithm.SHA512, 200, 7)]
+        public void GetUriSuccess(HashAlgorithm hashAlgorithm, byte period,  byte digits)
         {
             var id = Guid.NewGuid().ToString();
             var secret = new byte[32];
@@ -167,6 +167,60 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator.Test
             var options = GetOptions();
             var service = new AuthenticatorService(options, new DefaultSystemTime());
             Assert.Throws<ArgumentException>(()=> service.GetCode((HashAlgorithm)10000, Encoding.UTF8.GetBytes("test"), 8, 30));
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(5)]
+        [InlineData(9)]
+        [InlineData(10)]
+        public void InvalidNumberOfDigits(byte numberOfDigit)
+        {
+            var options = GetOptions();
+            options.Value.NumberOfDigits = numberOfDigit;
+
+            var ex = Assert.Throws<ArgumentException>(() => new AuthenticatorService(options, new DefaultSystemTime()));
+            Assert.Equal("The number of digits must be between 6 and 8.", ex.Message);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(29)]
+        public void InvalidPeriodInSeconds(byte periodInSeconds)
+        {
+            var options = GetOptions();
+            options.Value.PeriodInSeconds = periodInSeconds;
+
+            var ex = Assert.Throws<ArgumentException>(() => new AuthenticatorService(options, new DefaultSystemTime()));
+            Assert.Equal("The period must be at least 30 seconds.", ex.Message);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(5)]
+        [InlineData(9)]
+        [InlineData(10)]
+        public void GetCodeInvalidNumberOfDigits(byte numberOfDigit)
+        {
+            var options = GetOptions();
+            var service = new AuthenticatorService(options, new DefaultSystemTime());
+
+            var ex = Assert.Throws<ArgumentException>(() => service.GetCode(HashAlgorithm.SHA1, Encoding.UTF8.GetBytes("12345678901234567890"), numberOfDigit, 30));
+            Assert.Equal("The number of digits must be between 6 and 8.", ex.Message);
+        }
+
+        [Theory]
+        [InlineData(1)]
+        [InlineData(5)]
+        [InlineData(9)]
+        [InlineData(10)]
+        public void GetCodeInvalidPeriodInSeconds(byte periodInSeconds)
+        {
+            var options = GetOptions();
+            var service = new AuthenticatorService(options, new DefaultSystemTime());
+
+            var ex = Assert.Throws<ArgumentException>(() => service.GetCode(HashAlgorithm.SHA1, Encoding.UTF8.GetBytes("12345678901234567890"), 6, periodInSeconds));
+            Assert.Equal("The period must be at least 30 seconds.", ex.Message);
         }
     }
 }

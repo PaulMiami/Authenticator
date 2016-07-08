@@ -11,8 +11,8 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator
 
         public HashAlgorithm HashAlgorithm { get; set; } = HashAlgorithm.SHA1;
 
-        public int NumberOfDigits { get; set; } = 6;
+        public byte NumberOfDigits { get; set; } = 6;
 
-        public int PeriodInSeconds { get; set; } = 30;
+        public byte PeriodInSeconds { get; set; } = 30;
     }
 }

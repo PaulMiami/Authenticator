@@ -60,6 +60,24 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator {
         }
         
         /// <summary>
+        ///    Looks up a localized string similar to The number of digits must be between 6 and 8..
+        /// </summary>
+        public static string Exception_InvalidNumberOfDigits {
+            get {
+                return ResourceManager.GetString("Exception_InvalidNumberOfDigits", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///    Looks up a localized string similar to The period must be at least 30 seconds..
+        /// </summary>
+        public static string Exception_InvalidPeriodInSeconds {
+            get {
+                return ResourceManager.GetString("Exception_InvalidPeriodInSeconds", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///    Looks up a localized string similar to The &apos;{0}&apos; option must be provided..
         /// </summary>
         public static string Exception_OptionMustBeProvided {

@@ -14,7 +14,7 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator
     public class AuthenticatorService
     {
         private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-        private static readonly int[] TenPow = new[] { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000, 1000000000 };
+        private static readonly int[] TenPow = new[] { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000 };
         private AuthenticatorServiceOptions _options;
         private ISystemTime _systemTime;
 
@@ -24,6 +24,12 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator
             systemTime.CheckArgumentNull(nameof(systemTime));
 
             options.Value.Issuer.CheckMandatoryOption(nameof(options.Value.Issuer));
+
+            if (options.Value.NumberOfDigits < 6 || options.Value.NumberOfDigits > 8)
+                throw new ArgumentException(Resources.Exception_InvalidNumberOfDigits);
+
+            if (options.Value.PeriodInSeconds < 30)
+                throw new ArgumentException(Resources.Exception_InvalidPeriodInSeconds);
 
             _options = options.Value;
             _systemTime = systemTime;
@@ -47,12 +53,18 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator
                     _options.PeriodInSeconds);
         }
 
-        public int GetCode(HashAlgorithm hashAlgorithm, byte[] secret, int numberOfDigits, int periodInSeconds)
+        public int GetCode(HashAlgorithm hashAlgorithm, byte[] secret, byte numberOfDigits, byte periodInSeconds)
         {
             //https://tools.ietf.org/html/rfc4226#section-5.4
             //https://tools.ietf.org/html/rfc6238#section-4.2
 
             secret.CheckArgumentNullOrEmpty(nameof(secret));
+
+            if (numberOfDigits < 6 || numberOfDigits > 8)
+                throw new ArgumentException(Resources.Exception_InvalidNumberOfDigits);
+
+            if (periodInSeconds < 30)
+                throw new ArgumentException(Resources.Exception_InvalidPeriodInSeconds);
 
             var deltaTime = _systemTime.GetUtcNow() - UnixEpoch;
             var counter = ConvertToBytes((ulong)(deltaTime.TotalSeconds / periodInSeconds));
