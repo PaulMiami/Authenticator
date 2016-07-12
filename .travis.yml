@@ -14,4 +14,7 @@ install:
   - dotnet build src/PaulMiami.AspNetCore.Authentication.Authenticator/project.json
 
 script:
-  - dotnet test test/PaulMiami.AspNetCore.Authentication.Authenticator.Test/project.json
+  - dotnet test test/Authentication.Authenticator.Test/project.json
+  - dotnet test test/Identity.Authenticator.EntityFrameworkCore.Test/project.json
+  - dotnet test test/Identity.Authenticator.Test/project.json
+  

@@ -30,6 +30,10 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PaulMiami.AspNetCore.Identi
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "PaulMiami.AspNetCore.Identity.Authenticator.EntityFrameworkCore", "src\PaulMiami.AspNetCore.Identity.Authenticator.EntityFrameworkCore\PaulMiami.AspNetCore.Identity.Authenticator.EntityFrameworkCore.xproj", "{F23017C7-9FF9-4E72-81B5-0F33CE0680DD}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebSites", "WebSites", "{3A3427F8-E96C-440F-A52E-A144BCAAEC62}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "TestSite", "test\WebSites\TestSite\TestSite.xproj", "{0BDD367A-4F7C-4C10-9076-DC752BBA2AAB}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -68,6 +72,10 @@ Global
 		{F23017C7-9FF9-4E72-81B5-0F33CE0680DD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F23017C7-9FF9-4E72-81B5-0F33CE0680DD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F23017C7-9FF9-4E72-81B5-0F33CE0680DD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BDD367A-4F7C-4C10-9076-DC752BBA2AAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BDD367A-4F7C-4C10-9076-DC752BBA2AAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BDD367A-4F7C-4C10-9076-DC752BBA2AAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BDD367A-4F7C-4C10-9076-DC752BBA2AAB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -81,5 +89,7 @@ Global
 		{F5A98D51-CC6A-4B6A-80DF-A36F84F3849F} = {E231BBC0-94E8-4DAB-88C2-251C5A45335F}
 		{EEF398CB-4542-49B3-BDD4-E8ECC6F0DE3B} = {8B2E5CAD-6FFC-4BAF-A2AE-E2C036A4C637}
 		{F23017C7-9FF9-4E72-81B5-0F33CE0680DD} = {E231BBC0-94E8-4DAB-88C2-251C5A45335F}
+		{3A3427F8-E96C-440F-A52E-A144BCAAEC62} = {8B2E5CAD-6FFC-4BAF-A2AE-E2C036A4C637}
+		{0BDD367A-4F7C-4C10-9076-DC752BBA2AAB} = {3A3427F8-E96C-440F-A52E-A144BCAAEC62}
 	EndGlobalSection
 EndGlobal
