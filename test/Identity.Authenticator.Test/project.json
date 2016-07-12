@@ -31,9 +31,5 @@
     }
   },
 
-  "testRunner": "xunit",
-
-  "tooling": {
-    "defaultNamespace": "PaulMiami.AspNetCore.Mvc.Recaptcha.Test"
-  }
+  "testRunner": "xunit"
 }
