@@ -11,7 +11,7 @@ using System.Security.Cryptography;
 
 namespace PaulMiami.AspNetCore.Authentication.Authenticator
 {
-    public class AuthenticatorService
+    public class AuthenticatorService : IAuthenticatorService
     {
         private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
         private static readonly int[] TenPow = new[] { 1, 10, 100, 1000, 10000, 100000, 1000000, 10000000, 100000000 };
@@ -35,6 +35,30 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator
             _systemTime = systemTime;
         }
 
+        public byte PeriodInSeconds
+        {
+            get
+            {
+                return _options.PeriodInSeconds;
+            }
+        }
+
+        public byte NumberOfDigits
+        {
+            get
+            {
+                return _options.NumberOfDigits;
+            }
+        }
+
+        public HashAlgorithmType HashAlgorithm
+        {
+            get
+            {
+                return _options.HashAlgorithm;
+            }
+        }
+
         public string GetUri(string userIdentifier, byte[] secret)
         {
             userIdentifier.CheckArgumentNullOrEmpty(nameof(userIdentifier));
@@ -53,7 +77,7 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator
                     _options.PeriodInSeconds);
         }
 
-        public int GetCode(HashAlgorithm hashAlgorithm, byte[] secret, byte numberOfDigits, byte periodInSeconds)
+        public int GetCode(HashAlgorithmType hashAlgorithm, byte[] secret, byte numberOfDigits, byte periodInSeconds)
         {
             //https://tools.ietf.org/html/rfc4226#section-5.4
             //https://tools.ietf.org/html/rfc6238#section-4.2
@@ -98,30 +122,30 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator
             return result;
         }
 
-        private HMAC GetHmac(HashAlgorithm hashAlgorithm)
+        private HMAC GetHmac(HashAlgorithmType hashAlgorithm)
         {
             switch (hashAlgorithm)
             {
-                case HashAlgorithm.SHA1:
+                case HashAlgorithmType.SHA1:
                     return new HMACSHA1();
-                case HashAlgorithm.SHA256:
+                case HashAlgorithmType.SHA256:
                     return new HMACSHA256();
-                case HashAlgorithm.SHA512:
+                case HashAlgorithmType.SHA512:
                     return new HMACSHA512();
                 default:
                     throw new ArgumentException(nameof(hashAlgorithm));
             }
         }
 
-        private string GetHashAlgorithm(HashAlgorithm hashAlgorithm)
+        private string GetHashAlgorithm(HashAlgorithmType hashAlgorithm)
         {
             switch (hashAlgorithm)
             {
-                case HashAlgorithm.SHA1:
+                case HashAlgorithmType.SHA1:
                     return "SHA1";
-                case HashAlgorithm.SHA256:
+                case HashAlgorithmType.SHA256:
                     return "SHA256";
-                case HashAlgorithm.SHA512:
+                case HashAlgorithmType.SHA512:
                     return "SHA512";
                 default:
                     throw new ArgumentException(nameof(hashAlgorithm));

@@ -9,7 +9,7 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator
     {
         public string Issuer { get; set; }
 
-        public HashAlgorithm HashAlgorithm { get; set; } = HashAlgorithm.SHA1;
+        public HashAlgorithmType HashAlgorithm { get; set; } = HashAlgorithmType.SHA1;
 
         public byte NumberOfDigits { get; set; } = 6;
 

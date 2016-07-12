@@ -7,9 +7,9 @@ namespace TestWebApp.Controllers
     [Route("api/[controller]")]
     public class AuthenticatorController : Controller
     {
-        private AuthenticatorService _service;
+        private IAuthenticatorService _service;
 
-        public AuthenticatorController(AuthenticatorService service)
+        public AuthenticatorController(IAuthenticatorService service)
         {
             _service = service;
         }
@@ -20,7 +20,7 @@ namespace TestWebApp.Controllers
             if(string.IsNullOrEmpty(secret))
                 return BadRequest();
 
-            return new ObjectResult(string.Format("{0:000000}", _service.GetCode(HashAlgorithm.SHA1, Encoding.UTF8.GetBytes(secret), 6, 30)));
+            return new ObjectResult(string.Format("{0:000000}", _service.GetCode(HashAlgorithmType.SHA1, Encoding.UTF8.GetBytes(secret), 6, 30)));
         }
 
         

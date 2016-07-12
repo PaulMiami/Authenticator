@@ -9,9 +9,9 @@ namespace TestWebApp.Controllers
 {
     public class HomeController : Controller
     {
-        private AuthenticatorService _service;
+        private IAuthenticatorService _service;
 
-        public HomeController(AuthenticatorService service)
+        public HomeController(IAuthenticatorService service)
         {
             _service = service;
         }

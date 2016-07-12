@@ -5,7 +5,7 @@
 
 namespace PaulMiami.AspNetCore.Authentication.Authenticator
 {
-    public enum HashAlgorithm
+    public enum HashAlgorithmType : byte
     {
         SHA1,
         SHA256,

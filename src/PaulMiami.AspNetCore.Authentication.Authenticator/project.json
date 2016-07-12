@@ -1,6 +1,6 @@
 ﻿{
   "version": "1.0.0",
-  "title": "Authenticator TOTP library for ASPNET Core ",
+  "title": "Authenticator TOTP library for ASPNET Core",
   "authors": [ "Paul Biccherai" ],
   "description": "This is a helper library for two factor Authenticator",
   "packOptions": {

@@ -7,7 +7,7 @@ using System;
 
 namespace PaulMiami.AspNetCore.Authentication.Authenticator
 {
-    internal static class Guards
+    public static class Guards
     {
         public static void CheckArgumentNull(this object o, string name)
         {

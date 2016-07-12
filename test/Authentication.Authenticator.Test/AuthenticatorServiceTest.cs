@@ -50,10 +50,10 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator.Test
         }
 
         [Theory]
-        [InlineData(HashAlgorithm.SHA1, 30, 6)]
-        [InlineData(HashAlgorithm.SHA256, 60, 8)]
-        [InlineData(HashAlgorithm.SHA512, 200, 7)]
-        public void GetUriSuccess(HashAlgorithm hashAlgorithm, byte period,  byte digits)
+        [InlineData(HashAlgorithmType.SHA1, 30, 6)]
+        [InlineData(HashAlgorithmType.SHA256, 60, 8)]
+        [InlineData(HashAlgorithmType.SHA512, 200, 7)]
+        public void GetUriSuccess(HashAlgorithmType hashAlgorithm, byte period,  byte digits)
         {
             var id = Guid.NewGuid().ToString();
             var secret = new byte[32];
@@ -117,7 +117,7 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator.Test
             }
 
             var options = GetOptions();
-            options.Value.HashAlgorithm = (HashAlgorithm)10000;
+            options.Value.HashAlgorithm = (HashAlgorithmType)100;
             var service = new AuthenticatorService(options, new DefaultSystemTime());
 
             var ex = Assert.Throws<ArgumentException>(() => service.GetUri(id, secret));
@@ -125,25 +125,25 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator.Test
 
 
         [Theory]
-        [InlineData(59, 94287082, HashAlgorithm.SHA1, "12345678901234567890")]
-        [InlineData(59, 46119246, HashAlgorithm.SHA256, "12345678901234567890123456789012")]
-        [InlineData(59, 90693936, HashAlgorithm.SHA512, "1234567890123456789012345678901234567890123456789012345678901234")]
-        [InlineData(1111111109, 07081804, HashAlgorithm.SHA1, "12345678901234567890")]
-        [InlineData(1111111109, 68084774, HashAlgorithm.SHA256, "12345678901234567890123456789012")]
-        [InlineData(1111111109, 25091201, HashAlgorithm.SHA512, "1234567890123456789012345678901234567890123456789012345678901234")]
-        [InlineData(1111111111, 14050471, HashAlgorithm.SHA1, "12345678901234567890")]
-        [InlineData(1111111111, 67062674, HashAlgorithm.SHA256, "12345678901234567890123456789012")]
-        [InlineData(1111111111, 99943326, HashAlgorithm.SHA512, "1234567890123456789012345678901234567890123456789012345678901234")]
-        [InlineData(1234567890, 89005924, HashAlgorithm.SHA1, "12345678901234567890")]
-        [InlineData(1234567890, 91819424, HashAlgorithm.SHA256, "12345678901234567890123456789012")]
-        [InlineData(1234567890, 93441116, HashAlgorithm.SHA512, "1234567890123456789012345678901234567890123456789012345678901234")]
-        [InlineData(2000000000, 69279037, HashAlgorithm.SHA1, "12345678901234567890")]
-        [InlineData(2000000000, 90698825, HashAlgorithm.SHA256, "12345678901234567890123456789012")]
-        [InlineData(2000000000, 38618901, HashAlgorithm.SHA512, "1234567890123456789012345678901234567890123456789012345678901234")]
-        [InlineData(20000000000, 65353130, HashAlgorithm.SHA1, "12345678901234567890")]
-        [InlineData(20000000000, 77737706, HashAlgorithm.SHA256, "12345678901234567890123456789012")]
-        [InlineData(20000000000, 47863826, HashAlgorithm.SHA512, "1234567890123456789012345678901234567890123456789012345678901234")]
-        public void GetCodeTest(long time, int expectedCode, HashAlgorithm hashAlgorithm, string secret)
+        [InlineData(59, 94287082, HashAlgorithmType.SHA1, "12345678901234567890")]
+        [InlineData(59, 46119246, HashAlgorithmType.SHA256, "12345678901234567890123456789012")]
+        [InlineData(59, 90693936, HashAlgorithmType.SHA512, "1234567890123456789012345678901234567890123456789012345678901234")]
+        [InlineData(1111111109, 07081804, HashAlgorithmType.SHA1, "12345678901234567890")]
+        [InlineData(1111111109, 68084774, HashAlgorithmType.SHA256, "12345678901234567890123456789012")]
+        [InlineData(1111111109, 25091201, HashAlgorithmType.SHA512, "1234567890123456789012345678901234567890123456789012345678901234")]
+        [InlineData(1111111111, 14050471, HashAlgorithmType.SHA1, "12345678901234567890")]
+        [InlineData(1111111111, 67062674, HashAlgorithmType.SHA256, "12345678901234567890123456789012")]
+        [InlineData(1111111111, 99943326, HashAlgorithmType.SHA512, "1234567890123456789012345678901234567890123456789012345678901234")]
+        [InlineData(1234567890, 89005924, HashAlgorithmType.SHA1, "12345678901234567890")]
+        [InlineData(1234567890, 91819424, HashAlgorithmType.SHA256, "12345678901234567890123456789012")]
+        [InlineData(1234567890, 93441116, HashAlgorithmType.SHA512, "1234567890123456789012345678901234567890123456789012345678901234")]
+        [InlineData(2000000000, 69279037, HashAlgorithmType.SHA1, "12345678901234567890")]
+        [InlineData(2000000000, 90698825, HashAlgorithmType.SHA256, "12345678901234567890123456789012")]
+        [InlineData(2000000000, 38618901, HashAlgorithmType.SHA512, "1234567890123456789012345678901234567890123456789012345678901234")]
+        [InlineData(20000000000, 65353130, HashAlgorithmType.SHA1, "12345678901234567890")]
+        [InlineData(20000000000, 77737706, HashAlgorithmType.SHA256, "12345678901234567890123456789012")]
+        [InlineData(20000000000, 47863826, HashAlgorithmType.SHA512, "1234567890123456789012345678901234567890123456789012345678901234")]
+        public void GetCodeTest(long time, int expectedCode, HashAlgorithmType hashAlgorithm, string secret)
         {
             //https://tools.ietf.org/html/rfc6238#appendix-B
 
@@ -166,7 +166,7 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator.Test
         {
             var options = GetOptions();
             var service = new AuthenticatorService(options, new DefaultSystemTime());
-            Assert.Throws<ArgumentException>(()=> service.GetCode((HashAlgorithm)10000, Encoding.UTF8.GetBytes("test"), 8, 30));
+            Assert.Throws<ArgumentException>(()=> service.GetCode((HashAlgorithmType)100, Encoding.UTF8.GetBytes("test"), 8, 30));
         }
 
         [Theory]
@@ -205,7 +205,7 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator.Test
             var options = GetOptions();
             var service = new AuthenticatorService(options, new DefaultSystemTime());
 
-            var ex = Assert.Throws<ArgumentException>(() => service.GetCode(HashAlgorithm.SHA1, Encoding.UTF8.GetBytes("12345678901234567890"), numberOfDigit, 30));
+            var ex = Assert.Throws<ArgumentException>(() => service.GetCode(HashAlgorithmType.SHA1, Encoding.UTF8.GetBytes("12345678901234567890"), numberOfDigit, 30));
             Assert.Equal("The number of digits must be between 6 and 8.", ex.Message);
         }
 
@@ -219,8 +219,51 @@ namespace PaulMiami.AspNetCore.Authentication.Authenticator.Test
             var options = GetOptions();
             var service = new AuthenticatorService(options, new DefaultSystemTime());
 
-            var ex = Assert.Throws<ArgumentException>(() => service.GetCode(HashAlgorithm.SHA1, Encoding.UTF8.GetBytes("12345678901234567890"), 6, periodInSeconds));
+            var ex = Assert.Throws<ArgumentException>(() => service.GetCode(HashAlgorithmType.SHA1, Encoding.UTF8.GetBytes("12345678901234567890"), 6, periodInSeconds));
             Assert.Equal("The period must be at least 30 seconds.", ex.Message);
+        }
+
+
+        [Theory]
+        [InlineData(HashAlgorithmType.SHA1)]
+        [InlineData(HashAlgorithmType.SHA256)]
+        [InlineData(HashAlgorithmType.SHA512)]
+        public void GetHashAlgorithm(HashAlgorithmType hashAlgorithm)
+        {
+            var options = GetOptions();
+            options.Value.HashAlgorithm = hashAlgorithm;
+
+            var service = new AuthenticatorService(options, new DefaultSystemTime());
+
+            Assert.Equal(hashAlgorithm, service.HashAlgorithm);
+        }
+
+        [Theory]
+        [InlineData(6)]
+        [InlineData(7)]
+        [InlineData(8)]
+        public void GetNumberOfDigits(byte numberOfDigits)
+        {
+            var options = GetOptions();
+            options.Value.NumberOfDigits = numberOfDigits;
+
+            var service = new AuthenticatorService(options, new DefaultSystemTime());
+
+            Assert.Equal(numberOfDigits, service.NumberOfDigits);
+        }
+
+        [Theory]
+        [InlineData(30)]
+        [InlineData(100)]
+        [InlineData(150)]
+        public void GetPeriodInSeconds(byte periodInSeconds)
+        {
+            var options = GetOptions();
+            options.Value.PeriodInSeconds = periodInSeconds;
+
+            var service = new AuthenticatorService(options, new DefaultSystemTime());
+
+            Assert.Equal(periodInSeconds, service.PeriodInSeconds);
         }
     }
 }

@@ -32,13 +32,10 @@ namespace TestWebApp
         {
             services.AddMvc();
 
-            services.Configure<AuthenticatorServiceOptions>(c=> 
+            services.AddAuthenticator(c =>
             {
                 c.Issuer = "TestWebApp";
             });
-
-            services.TryAddSingleton<ISystemTime, DefaultSystemTime>();
-            services.TryAddSingleton<AuthenticatorService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
