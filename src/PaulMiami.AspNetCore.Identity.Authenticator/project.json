@@ -1,10 +1,25 @@
 {
-  "version": "1.0.0-*",
-
+  "version": "1.0.0",
+  "title": "Authenticator TOTP library for ASPNET Core identity",
+  "authors": [ "Paul Biccherai" ],
+  "description": "This is a helper library for two factor Authenticator\n\nGetting started guide:\nhttps://github.com/PaulMiami/Authenticator/wiki/Getting-started\n\nChange log:\nhttps://github.com/PaulMiami/Authenticator/wiki/Change-log",
+  "packOptions": {
+    "summary": "This is a helper library for two factor Authenticator",
+    "projectUrl": "https://github.com/PaulMiami/Authenticator",
+    "tags": [ "aspnetcore", "authenticator", "totp", "twofactor", "2fa", "identity" ],
+    "licenseUrl": "https://raw.githubusercontent.com/PaulMiami/Authenticator/master/LICENSE",
+    "repository": {
+      "type": "git",
+      "url": "https://github.com/PaulMiami/Authenticator"
+    }
+  },
+  "buildOptions": {
+    "warningsAsErrors": true
+  },
   "dependencies": {
     "NETStandard.Library": "1.6.0",
     "Microsoft.AspNetCore.Identity": "1.0.0",
-    "PaulMiami.AspNetCore.Authentication.Authenticator": {"target": "project"}
+    "PaulMiami.AspNetCore.Authentication.Authenticator": { "target": "project" }
   },
 
   "frameworks": {

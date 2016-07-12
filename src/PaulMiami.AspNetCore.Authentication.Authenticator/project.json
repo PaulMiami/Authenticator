@@ -2,7 +2,7 @@
   "version": "1.0.0",
   "title": "Authenticator TOTP library for ASPNET Core",
   "authors": [ "Paul Biccherai" ],
-  "description": "This is a helper library for two factor Authenticator",
+  "description": "This is a helper library for two factor Authenticator\n\nGetting started guide:\nhttps://github.com/PaulMiami/Authenticator/wiki/Getting-started\n\nChange log:\nhttps://github.com/PaulMiami/Authenticator/wiki/Change-log",
   "packOptions": {
     "summary": "This is a helper library for two factor Authenticator",
     "projectUrl": "https://github.com/PaulMiami/Authenticator",
